@@ -1,4 +1,8 @@
 
-html, body {
-    background-color: rgb(33, 152, 189);
-}
+@import './base/settings';
+@import './base/base';
+
+// components
+@import './components/auth';
+@import './components/buttons';
+@import './components/links';
