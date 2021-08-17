@@ -11,6 +11,7 @@ export const LoginScreen = () => {
                     placeholder="Email"
                     name="email"
                     className="auth__input"
+                    autoComplete="off"
                 />
                 <input 
                     type="password"
@@ -21,7 +22,6 @@ export const LoginScreen = () => {
                 <button
                     type="submit"
                     className="btn btn-primary btn-block"
-                    // disabled={true}
                 >
                     Login
                 </button>
@@ -43,7 +43,7 @@ export const LoginScreen = () => {
 
                 <Link
                     className="link"
-                    to="auth/register"
+                    to="/auth/register/"
                 >
                     Create new account
                 </Link>
