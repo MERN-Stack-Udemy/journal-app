@@ -7,6 +7,11 @@
     font-size: 1em;
     padding: 7px, 10px, 7px, 10px;
 
+    transition: color .3s ease;
+    &:hover {
+        color: darken($color: white, $amount: 15);
+    }
+
     &:focus {
         outline: none;
     }
