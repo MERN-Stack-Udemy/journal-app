@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { useForm } from '../../hooks/useForm'
 import { removeErrorAction, setErrorAction } from '../../actions/ui'
+import { startRegisterWithEmailPassword } from '../../actions/auth'
 
 export const RegisterScreen = () => {
     
     const dispatch = useDispatch();
-    const { msgError } = useSelector(state => state.ui)
+    const { msgError,loading } = useSelector(state => state.ui)
 
     const [formValues, handleInputChange] = useForm({
         name: 'smog',
@@ -22,7 +23,7 @@ export const RegisterScreen = () => {
     const handleRegister = (e) => {
         e.preventDefault();
         if( isFormValid() ){
-            console.log('form is valid!');
+            dispatch( startRegisterWithEmailPassword( email, password, name ) );
         }
     };
 
@@ -87,7 +88,7 @@ export const RegisterScreen = () => {
                 <button
                     type="submit"
                     className="btn btn-primary btn-block mb-5"
-                    // disabled={true}
+                    disabled={loading}
                 >
                     Register
                 </button>

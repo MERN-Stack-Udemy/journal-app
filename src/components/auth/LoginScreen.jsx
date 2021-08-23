@@ -1,23 +1,40 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
+import validator from 'validator';
 
 import { startGoogleLogin, startLoginEmailPassword } from '../../actions/auth';
+import { removeErrorAction, setErrorAction } from '../../actions/ui';
 import { useForm } from '../../hooks/useForm'
 
 export const LoginScreen = () => {
 
     const dispatch = useDispatch();
+    const { msgError, loading } = useSelector(state => state.ui)
 
     const [ formValues, handleInpuChange] = useForm({
         email : 'smog@gmail.com',
-        password : '12346579'
+        password : '123456'
     });
     const { email, password } = formValues;
 
     const handleLogin = (e) =>{
         e.preventDefault();
-        dispatch( startLoginEmailPassword(email, password) );
+        if(isFormValid){
+            dispatch( startLoginEmailPassword(email, password) );
+        }
+    }
+
+    const isFormValid = () => {
+        if (!validator.isEmail(email)){
+            dispatch( setErrorAction('email is not valid'));
+            return false;
+        }else if ( password.length < 5){
+            dispatch( setErrorAction('incorrect password 6 characters min'));
+            return false;
+        }
+        dispatch( removeErrorAction() );
+        return true;
     }
 
     const handleGoogleLogin = () => {
@@ -28,6 +45,12 @@ export const LoginScreen = () => {
         <>
             <h3 className="auth__title" >Login</h3>
             <form onSubmit={ handleLogin }>
+                {
+                    msgError &&
+                    <div className="auth__alert-error">
+                        {msgError}
+                    </div>
+                }
                 <input 
                     type="text"
                     placeholder="Email"
@@ -48,6 +71,7 @@ export const LoginScreen = () => {
                 <button
                     type="submit"
                     className="btn btn-primary btn-block"
+                    disabled={loading}
                 >
                     Login
                 </button>
